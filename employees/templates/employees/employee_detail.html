@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-4">
+        <h1 class="text-center">{{ employee.full_name }}</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Должность: {{ employee.position }}</h5>
+                <p class="card-text">Дата найма: {{ employee.hire_date }}</p>
+                <p class="card-text">Зарплата: {{ employee.salary }}</p>
+                <p class="card-text">Менеджер:
+                    <a href="{{ employee.manager.get_absolute_url }}">{{ employee.manager.full_name }}</a></p>
+            </div>
+        </div>
+
+        <h2 class="mt-4">Подчиненные:</h2>
+        {% if subordinates %}
+            <ul class="list-group">
+                {% for subordinate in subordinates %}
+                    <li class="list-group-item">
+                        <a href="{{ subordinate.get_absolute_url }}">{{ subordinate.full_name }}</a>
+                        <span class="badge badge-secondary">{{ subordinate.position }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="alert alert-info mt-2" role="alert">
+                Подчиненных нет.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

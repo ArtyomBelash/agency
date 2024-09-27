@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="my-4 text-center">Иерархия сотрудников</h1>
+        <ul class="list-group">
+            {% for employee in employees %}
+                <li class="list-group-item">
+                    <a href="{{ employee.get_absolute_url }}">{{ employee.full_name }}</a>
+                    <span class="badge badge-secondary">{{ employee.position }}</span>
+                    {% if employee.subordinates %}
+                        <ul class="list-group mt-2">
+                            {% for subordinate in employee.subordinates.all %}
+                                <li class="list-group-item">
+                                    <a href="{{ subordinate.get_absolute_url }}">{{ subordinate.full_name }}</a>
+                                    <span class="badge badge-secondary">{{ subordinate.position }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
